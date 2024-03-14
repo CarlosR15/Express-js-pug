@@ -31,6 +31,9 @@ nav ul li a {
 nav ul li a:hover {
   background-color: #555;
 }
+nav ul li .carritoImg {
+  width: 20px;
+}
 
 .container {
   max-width: 800px;
@@ -65,6 +68,14 @@ table tr:hover {
   background-color: #ddd;
 }
 
+.contenedorbtns {
+  display: flex;
+  align-items: center;
+}
+.contenedorbtns form {
+  margin-right: 5px;
+}
+
 .action-buttons {
   display: flex;
   align-items: center;
@@ -87,6 +98,34 @@ table tr:hover {
 .action-buttons span {
   margin: 0 5px;
   font-weight: bold;
+}
+
+.elimbtn {
+  display: flex;
+  align-items: center;
+}
+.elimbtn form {
+  margin-right: 5px;
+}
+.elimbtn button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.elimbtn button:hover {
+  background-color: #96131f;
+}
+
+.btnagcar {
+  display: flex;
+}
+
+.agregarcar {
+  width: 20px;
 }
 
 .procesar-compra-container {
@@ -141,22 +180,25 @@ p.empty-cart {
 
 .producto-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
   gap: 20px;
 }
 
 .producto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
 }
 .producto:hover {
-  color: #555;
+  color: #018790;
 }
 .producto img {
   max-width: 100%;
-  height: auto;
+  height: 50%;
   margin-bottom: 10px;
 }
 .producto h2 {
@@ -175,7 +217,7 @@ p.empty-cart {
   cursor: pointer;
 }
 .producto button:hover {
-  background-color: #555;
+  background-color: #018790;
 }
 
 .button-container {

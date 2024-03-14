@@ -4,9 +4,6 @@ block content
     h1 #{title}
     if usuario
         if carrito.length > 0
-            .procesar-compra-container
-                form(action='/detalle-compra' method='GET')
-                    button(type='submit' class='procesar-compra-button') Procesar compra
             table
                 thead
                     tr
@@ -23,14 +20,19 @@ block content
                             td= `\$ ${item.precio}`
                             td= `\$ ${(item.precio * item.cantidad)}`
                             td
-                                .action-buttons
-                                    form(action=`/eliminar-del-carrito/${item.id}`, method='POST')
-                                        button(type='submit') Eliminar
-                                    form(action=`/actualizar-cantidad/${item.id}/-1`, method='POST')
-                                        button(type='submit') -
-                                    span= item.quantity
-                                    form(action=`/actualizar-cantidad/${item.id}/1`, method='POST')
-                                        button(type='submit') +
+                                .contenedorbtns
+                                    .elimbtn
+                                        form(action=`/eliminar-del-carrito/${item.id}`, method='POST')
+                                            button(type='submit') Eliminar
+                                    .action-buttons
+                                        form(action=`/actualizar-cantidad/${item.id}/-1`, method='POST')
+                                            button(type='submit') -
+                                        span= item.quantity
+                                        form(action=`/actualizar-cantidad/${item.id}/1`, method='POST')
+                                            button(type='submit') +
+            .procesar-compra-container
+                form(action='/detalle-compra' method='GET')
+                    button(type='submit' class='procesar-compra-button') Procesar compra
         else
             p No hay productos en el carrito.
     else

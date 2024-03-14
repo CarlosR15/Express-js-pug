@@ -11,8 +11,7 @@ html
           a(href='/') Inicio
         li
           a(href='/catalogo') Catálogo de Productos
-        li
-          a(href='/carrito') Carrito de Compra (#{carrito.length})
+
         li
           #login-btn
             if (usuario)
@@ -21,5 +20,8 @@ html
             else
               li
                 a(href='/login') Iniciar Sesión
+        li.carritoCont
+          a(href='/carrito') (#{carrito.length})
+            img.carritoImg(src="../images/carrito.png", alt="Carrito.png")
     .container
       block content

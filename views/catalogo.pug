@@ -11,7 +11,8 @@ block content
           p= producto.descripcion
           p Disponible: #{producto.cantidad}
           p Precio: #{producto.precio}
-          form(action=`/agregar-al-carrito/${producto.id}`, method='POST')
+          form.btnagcar(action=`/agregar-al-carrito/${producto.id}`, method='POST')
             button(type='submit') Agregar al carrito
+              img.agregarcar(src="../images/agregar-carrito.png", alt="Agregar-Carrito.png")
   else
     p No se encontraron resultados.

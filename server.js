@@ -47,7 +47,7 @@ app.get('/buscar-producto', (req, res) => {
     const productosFiltrados = productos.filter(producto =>
         producto.nombre.toLowerCase().includes(query) || producto.descripcion.toLowerCase().includes(query)
     );
-    res.render('catalogo', { title: 'Resultados de la Búsqueda', productos: productosFiltrados, usuario });
+    res.render('catalogo', { title: 'Resultados de la Búsqueda', productos: productosFiltrados });
 });
 
 

@@ -3,6 +3,9 @@ const app = express();
 const session = require('express-session');
 const path = require('path');
 const productosController = require('./controllers/productos');
+const usuarioController = require('./controllers/usuarios');
+
+app.use(express.urlencoded({ extended: true}));
 
 // Configurar middleware para manejar sesiones
 app.use(session({
@@ -26,13 +29,15 @@ app.use(express.json());
 
 // Ruta para la página de inicio
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Página de Bienvenida' });
+    const usuario = req.session.usuario; // pal usuario al iniciar sesion creo
+    res.render('index', { title: 'Página de Bienvenida', usuario });
 }); 
 
 // Ruta para el catálogo de productos
 app.get('/catalogo', (req, res) => {
+    const usuario = req.session.usuario;
     const productos = productosController.getProductos();
-    res.render('catalogo', { title: 'Catálogo de Productos', productos });
+    res.render('catalogo', { title: 'Catálogo de Productos', productos, usuario });
 });
 
 // Ruta para buscar productos
@@ -42,21 +47,53 @@ app.get('/buscar-producto', (req, res) => {
     const productosFiltrados = productos.filter(producto =>
         producto.nombre.toLowerCase().includes(query) || producto.descripcion.toLowerCase().includes(query)
     );
-    res.render('catalogo', { title: 'Resultados de la Búsqueda', productos: productosFiltrados });
+    res.render('catalogo', { title: 'Resultados de la Búsqueda', productos: productosFiltrados, usuario });
 });
 
 
 // Ruta para el detalle de producto
 app.get('/producto/:id', (req, res) => {
+    const usuario = req.session.usuario;
     const idProducto = req.params.id;
     const producto = productosController.getProductoPorId(idProducto);
-    res.render('producto', { title: 'Detalle del Producto', producto });
+    res.render('producto', { title: 'Detalle del Producto', producto, usuario });
 });
 
 // Ruta para el carrito de compra
 app.get('/carrito', (req, res) => {
-  let carrito = req.session.carrito || []; // Obtiene el carrito de la sesión del usuario, si no existe, crea un nuevo carrito vacío
-    res.render('carrito', { title: 'Carrito de Compra', carrito });
+    const usuario = req.session.usuario;
+    let carrito = req.session.carrito || []; // Obtiene el carrito de la sesión del usuario, si no existe, crea un nuevo carrito vacío
+    res.render('carrito', { title: 'Carrito de Compra', carrito, usuario });
+});
+
+// Ruta para boton de login
+app.get('/login', (req, res) => {
+    res.render('login', { title: 'Iniciar Sesion' });
+});
+
+app.post('/login', (req, res) => {
+    let usuario = req.body.usuario;
+    const cont = req.body.contrasena;
+
+    usuario = usuarioController.getUsuariosPorUsuario(usuario);
+    console.log(usuario);
+    if(usuario){
+        if(cont === usuario.contrasena){
+            req.session.usuario = usuario;
+            res.render('index', {title: 'Página de Bienvenida', usuario: usuario});
+        } else {
+            res.render('login', { title: 'Por favor no me digas que esta mal', error: 'Contraseña no valida.' });
+        }
+    }else {
+        res.render('login', { title:'No es la contrasenia bro', error: 'Usuario no valido'})
+    }
+});
+
+// Ruta cerrar sesion
+app.get('/logout', (req, res) => {
+    req.session.usuario = null;
+    req.session.usu1 = null; // Elimina la variable 'usu1' de la sesión
+    res.redirect('/'); // Redirige a la página de inicio
 });
 
 // Ruta para agregar un producto al carrito

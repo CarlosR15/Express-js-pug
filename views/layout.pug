@@ -13,6 +13,13 @@ html
           a(href='/catalogo') Catálogo de Productos
         li
           a(href='/carrito') Carrito de Compra (#{carrito.length})
-
+        li
+          #login-btn
+            if (usuario)
+              li(class="logged-in")
+                a(href='/logout') Cerrar Sesión
+            else
+              li
+                a(href='/login') Iniciar Sesión
     .container
       block content
